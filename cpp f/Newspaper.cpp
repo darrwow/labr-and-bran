@@ -1,25 +1,22 @@
 #include "Newspaper.h"
-
 using namespace std;
 
-Newspaper::Newspaper(int newsId, const string& newsTitle, int newsYear,
-    const string& newsIssueDate, int newsCirculation)
-    : Publication(newsId, newsTitle, newsYear), issueDate(newsIssueDate), circulation(newsCirculation) {}
+Newspaper::Newspaper(int newspaperId, const string& newspaperTitle, const string& newspaperPublisher,
+    int newspaperYear, int newspaperCirculation, const string& newspaperCity)
+    : Publication(newspaperId, newspaperTitle, newspaperPublisher, newspaperYear),
+    circulation(newspaperCirculation), city(newspaperCity) {}
 
-string Newspaper::getIssueDate() const { return issueDate; }
 int Newspaper::getCirculation() const { return circulation; }
+string Newspaper::getCity() const { return city; }
 
-string Newspaper::getType() const { return "Газета"; }
+void Newspaper::printShort() const {
+    Publication::printShort();
+    cout << "    Газета: тираж " << circulation << ", город выпуска: " << city << "\n";
+}
 
 void Newspaper::print(ostream& out) const {
     Publication::print(out);
-    out << "Дата выпуска: " << issueDate << "\n";
+    out << "Тип: газета\n";
     out << "Тираж: " << circulation << "\n";
-}
-
-void Newspaper::read(istream& in) {
-    Publication::read(in);
-    getline(in, issueDate);
-    in >> circulation;
-    in.ignore(1000, '\n');
+    out << "Город выпуска: " << city << "\n";
 }

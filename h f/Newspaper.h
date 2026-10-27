@@ -1,21 +1,20 @@
 #pragma once
-
+#include <iostream>
 #include <string>
 #include "Publication.h"
 
 class Newspaper : public Publication {
 private:
-    std::string issueDate; //дата выпуска
-    int circulation; //тираж
+    int circulation;
+    std::string city;
 
 public:
-    Newspaper(int newsId, const std::string& newsTitle, int newsYear,
-        const std::string& newsIssueDate, int newsCirculation);
+    Newspaper(int newspaperId, const std::string& newspaperTitle, const std::string& newspaperPublisher,
+        int newspaperYear, int newspaperCirculation, const std::string& newspaperCity);
 
-    std::string getIssueDate() const;
     int getCirculation() const;
+    std::string getCity() const;
 
-    std::string getType() const override;
+    void printShort() const override;
     void print(std::ostream& out) const override;
-    void read(std::istream& in) override;
 };

@@ -1,41 +1,30 @@
 #include "Publication.h"
-
 using namespace std;
 
-Publication::Publication(int pubId, const string& pubTitle, int pubYear)
-    : id(pubId), title(pubTitle), year(pubYear) {}
+Publication::Publication(int publicationId, const string& publicationTitle, const string& publicationPublisher, int publicationYear)
+    : id(publicationId), title(publicationTitle), publisher(publicationPublisher), year(publicationYear) {}
 
 int Publication::getId() const { return id; }
 string Publication::getTitle() const { return title; }
+string Publication::getPublisher() const { return publisher; }
 int Publication::getYear() const { return year; }
+
+void Publication::printShort() const {
+    cout << " ID " << id << ": \"" << title << "\", " << publisher << ", " << year << " г.\n";
+}
 
 void Publication::print(ostream& out) const {
     out << "ID: " << id << "\n";
-    out << "Тип: " << getType() << "\n";  
     out << "Название: " << title << "\n";
+    out << "Издательство: " << publisher << "\n";
     out << "Год: " << year << "\n";
 }
 
-void Publication::read(istream& in) {
-    getline(in, title);
-    in >> year;
-    in.ignore(1000, '\n');
-}
-
-void Publication::printShort() const {
-    cout << "  ID " << id << ": [" << getType() << "] \"" << title << "\", " << year << "\n";
-}
-
 bool Publication::operator==(const Publication& other) const { return id == other.id; }
-bool Publication::operator!=(const Publication& other) const { return !(*this == other); }
-bool Publication::operator<(const Publication& other) const { return id < other.id; }
+bool Publication::operator<=(const Publication& other) const { return year <= other.year; }
+bool Publication::operator>(const Publication& other) const { return year > other.year; }
 
-ostream& operator<<(ostream& out, const Publication& pub) {
-    pub.print(out);
-    return out;
-}
 
-istream& operator>>(istream& in, Publication& pub) {
-    pub.read(in);
-    return in;
+bool samePublisher(const Publication& a, const Publication& b) {
+    return a.publisher == b.publisher;
 }

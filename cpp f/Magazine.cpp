@@ -1,25 +1,22 @@
 #include "Magazine.h"
-
 using namespace std;
 
-Magazine::Magazine(int magId, const string& magTitle, int magYear,
-    int magIssueNumber, const string& magTopic)
-    : Publication(magId, magTitle, magYear), issueNumber(magIssueNumber), topic(magTopic) {}
+Magazine::Magazine(int magazineId, const string& magazineTitle, const string& magazinePublisher,
+    int magazineYear, int magazineIssueNumber, const string& magazineTopic)
+    : Publication(magazineId, magazineTitle, magazinePublisher, magazineYear),
+    issueNumber(magazineIssueNumber), topic(magazineTopic) {}
 
 int Magazine::getIssueNumber() const { return issueNumber; }
 string Magazine::getTopic() const { return topic; }
 
-string Magazine::getType() const { return "Журнал"; }
+void Magazine::printShort() const {
+    Publication::printShort();
+    cout << "    Журнал: выпуск №" << issueNumber << ", тематика: " << topic << "\n";
+}
 
 void Magazine::print(ostream& out) const {
     Publication::print(out);
+    out << "Тип: журнал\n";
     out << "Номер выпуска: " << issueNumber << "\n";
     out << "Тематика: " << topic << "\n";
-}
-
-void Magazine::read(istream& in) {
-    Publication::read(in);
-    in >> issueNumber;
-    in.ignore(1000, '\n');
-    getline(in, topic);
 }

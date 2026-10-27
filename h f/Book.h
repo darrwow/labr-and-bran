@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 #include <string>
 #include "Publication.h"
 
@@ -7,19 +7,16 @@ class Book : public Publication {
 private:
     std::string author;
     int pages;
+    std::string genre;
 
 public:
-    Book(int bookId, const std::string& bookTitle, int bookYear,
-        const std::string& bookAuthor, int bookPages);
+    Book(int bookId, const std::string& bookTitle, const std::string& bookPublisher, int bookYear,
+        const std::string& bookAuthor, int bookPages, const std::string& bookGenre);
 
     std::string getAuthor() const;
     int getPages() const;
+    std::string getGenre() const;
 
-    std::string getType() const override;
+    void printShort() const override;
     void print(std::ostream& out) const override;
-    void read(std::istream& in) override;
-
-    friend bool sameAuthor(const Book& a, const Book& b);
 };
-
-bool sameAuthor(const Book& a, const Book& b);

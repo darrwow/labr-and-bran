@@ -1,29 +1,24 @@
 #include "Book.h"
-
 using namespace std;
 
-Book::Book(int bookId, const string& bookTitle, int bookYear,
-    const string& bookAuthor, int bookPages)
-    : Publication(bookId, bookTitle, bookYear), author(bookAuthor), pages(bookPages) {}
+Book::Book(int bookId, const string& bookTitle, const string& bookPublisher, int bookYear,
+    const string& bookAuthor, int bookPages, const string& bookGenre)
+    : Publication(bookId, bookTitle, bookPublisher, bookYear),   
+    author(bookAuthor), pages(bookPages), genre(bookGenre) {}
 
 string Book::getAuthor() const { return author; }
 int Book::getPages() const { return pages; }
+string Book::getGenre() const { return genre; }
 
-string Book::getType() const { return "Книга"; }
+void Book::printShort() const {
+    Publication::printShort();  
+    cout << "    Книга: " << author << ", " << pages << " стр., жанр: " << genre << "\n";
+}
 
 void Book::print(ostream& out) const {
-    Publication::print(out);  
+    Publication::print(out);
+    out << "Тип: книга\n";
     out << "Автор: " << author << "\n";
     out << "Страниц: " << pages << "\n";
-}
-
-void Book::read(istream& in) {
-    Publication::read(in);  
-    getline(in, author);
-    in >> pages;
-    in.ignore(1000, '\n');
-}
-
-bool sameAuthor(const Book& a, const Book& b) {
-    return a.author == b.author;
+    out << "Жанр: " << genre << "\n";
 }

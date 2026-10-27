@@ -6,28 +6,38 @@ class Publication {
 private:
     int id;
     std::string title;
+    std::string publisher;
     int year;
 
 public:
-    Publication(int pubId, const std::string& pubTitle, int pubYear);
+    Publication(int publicationId, const std::string& publicationTitle, const std::string& publicationPublisher, int publicationYear);
 
     virtual ~Publication() = default;
 
     int getId() const;
     std::string getTitle() const;
+    std::string getPublisher() const;
     int getYear() const;
 
-    virtual std::string getType() const = 0;
-
-    virtual void print(std::ostream& out) const;  
-    virtual void read(std::istream& in);          
-
-    void printShort() const;  
+    virtual void printShort() const;                 
+    virtual void print(std::ostream& out) const;      
 
     bool operator==(const Publication& other) const;
-    bool operator!=(const Publication& other) const;
-    bool operator<(const Publication& other) const;
-};
+    bool operator<=(const Publication& other) const;
+    bool operator>(const Publication& other) const;
 
-std::ostream& operator<<(std::ostream& out, const Publication& pub);
-std::istream& operator>>(std::istream& in, Publication& pub);
+    friend std::ostream& operator<<(std::ostream& out, const Publication& publication) {
+        publication.print(out);
+        return out;
+    }
+
+    friend std::istream& operator>>(std::istream& in, Publication& publication) {
+        std::getline(in, publication.title);
+        std::getline(in, publication.publisher);
+        in >> publication.year;
+        in.ignore(1000, '\n');
+        return in;
+    }
+
+    friend bool samePublisher(const Publication& a, const Publication& b);
+};
